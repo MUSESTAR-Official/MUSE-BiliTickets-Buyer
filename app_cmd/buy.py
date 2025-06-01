@@ -28,6 +28,7 @@ def buy_cmd(args: Namespace):
         title=f"{filename_only}",
         fill_height=True,
         theme=Soft(),
+        favicon="assets/favicon.ico",
     ) as demo:
         gr.Markdown(
             f"""
