@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - 'v*.*.*'
+permissions:
+  contents: write
 #https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners
 jobs:
   build:
