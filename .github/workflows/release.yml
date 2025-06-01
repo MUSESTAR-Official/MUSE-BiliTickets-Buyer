@@ -49,12 +49,21 @@ jobs:
           $env:PLAYWRIGHT_BROWSERS_PATH=0
           playwright install chromium
 
-      - name: Copy Playwright browsers to project
+      - name: Copy Playwright browsers to project (macOS)
+        if: matrix.config.os.filename == 'macos_arm64'
         shell: bash
         run: |
           BROWSERS_PATH=$(python -c "import playwright; import os; print(os.path.dirname(playwright.__file__) + '/driver/package/.local-browsers')")
           mkdir -p ms-playwright
           cp -r $BROWSERS_PATH/* ms-playwright/
+
+      - name: Copy Playwright browsers to project (Windows)
+        if: matrix.config.os.filename == 'windows_amd64'
+        shell: pwsh
+        run: |
+          $browsersPath = python -c "import playwright; import os; print(os.path.dirname(playwright.__file__) + '/driver/package/.local-browsers')"
+          if (!(Test-Path ms-playwright)) { New-Item -ItemType Directory -Path ms-playwright }
+          Copy-Item -Path (Join-Path $browsersPath '*') -Destination ms-playwright -Recurse
 
       - name: Build Pyinstaller
         shell: bash
