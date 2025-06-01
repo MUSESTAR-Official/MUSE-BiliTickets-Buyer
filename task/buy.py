@@ -219,7 +219,12 @@ def buy_stream(
                 save_path = os.path.join(EXE_PATH, f"{safe_username}_qrcode.png")
                 qr_gen_image.save(save_path)
                 yield f"二维码已保存到: {save_path}"
-                qr_gen_image.show()  
+                if sys.platform.startswith('win'):
+                    os.startfile(save_path)
+                elif sys.platform.startswith('darwin'):
+                    subprocess.run(['open', save_path])
+                else:
+                    subprocess.run(['xdg-open', save_path])
                 if pushplusToken:
                     PushPlusUtil.send_message(
                         pushplusToken, "抢票成功", "前往订单中心付款吧"
