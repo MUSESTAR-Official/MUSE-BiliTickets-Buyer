@@ -1,3 +1,7 @@
+# Based on [biliTickerBuy] (https://github.com/mikumifa/biliTickerBuy), MIT Licensed.
+# Original author: [mikumifa]
+# Modifications Copyright (c) [2025] [MUSESTAR]
+
 import argparse
 import os
 import sys
