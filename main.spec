@@ -1,21 +1,54 @@
-requests~=2.31.0
-setuptools~=65.5.1
-gradio~=4.44.1
-qrcode~=7.4.2
-loguru~=0.7.2
-Pillow~=10.3.0
-retry~=0.9.2
-tinydb~=4.8.0
-bili-ticket-gt-python~=0.2.8
-ntplib~=0.4.0
-gradio-calendar~=0.0.4
-playwright~=1.46.0
-install_playwright~=0.1.0
-numpy~=1.26.4
-onnxruntime~=1.18.0
-opencv-python~=4.11.0.86
-gradio_calendar~=0.0.6
-scipy~=1.15.2
-playsound3~=3.2.2
-pydantic~=2.8.2
-gradio_log~=0.0.4
+# -*- mode: python ; coding: utf-8 -*-
+from PyInstaller.utils.hooks import collect_data_files
+
+datas = []
+datas += collect_data_files('gradio_client')
+datas += collect_data_files('gradio')
+datas += collect_data_files('gradio_calendar')
+datas += collect_data_files('gradio_log')
+
+datas += collect_data_files('playwright')
+datas.append(('geetest/model/triple.onnx', 'geetest/model'))
+datas.append(('geetest/model/yolo.onnx', 'geetest/model'))
+
+a = Analysis(
+    ['main.py'],
+    pathex=[],
+    binaries=[],
+    datas=datas,
+    module_collection_mode={
+        'gradio': 'py',  # Collect gradio package as source .py files
+        'gradio_calendar': 'py',  # Collect'
+        'gradio_log': 'py',  # Collect'
+    },
+    hiddenimports=['geetest.TripleValidator', 'geetest.AmorterValidator', 'bili_ticket_gt_python',
+                   'scipy._lib.array_api_compat.numpy.fft'],
+    hookspath=[],
+    hooksconfig={},
+    runtime_hooks=[],
+    excludes=[],
+    noarchive=False,
+)
+pyz = PYZ(a.pure)
+
+exe = EXE(
+    pyz,
+    a.scripts,
+    a.binaries,
+    a.datas,
+    [],
+    name='biliTickerBuy',
+    debug=False,
+    bootloader_ignore_signals=False,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    runtime_tmpdir=None,
+    console=True,
+    disable_windowed_traceback=False,
+    argv_emulation=False,
+    target_arch=None,
+    codesign_identity=None,
+    entitlements_file=None,
+    icon=['assets/icon.ico']
+)

@@ -13,17 +13,8 @@ jobs:
       matrix:
         config:
           - os:
-              name: ubuntu-22.04
-              filename: linux_amd64
-          - os:
-              name: ubuntu-22.04-arm
-              filename: linux_arm64
-          - os:
               name: macos-14
               filename: macos_arm64
-          - os:
-              name: macos-13
-              filename: macos_intel
           - os:
               name: windows-latest
               filename: windows_amd64
