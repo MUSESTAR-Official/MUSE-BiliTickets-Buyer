@@ -37,7 +37,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='biliTickerBuy',
+    name='MUSE-BiliTickets-Buyer',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

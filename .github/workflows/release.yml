@@ -49,12 +49,6 @@ jobs:
         if: matrix.config.os.filename == 'windows_amd64'
         run: Compress-Archive -Path ./dist/MUSE-BiliTickets-Buyer.exe -DestinationPath tmp.zip
 
-      - name: Zip the Build-macos
-        if: matrix.config.os.filename == 'macos_arm64'
-        run: |
-          cd ./dist
-          zip -r ../tmp.zip MUSE-BiliTickets-Buyer*
-
       - name: Zip the Build-linux
         if: matrix.config.os.filename != 'windows_amd64'
         run: |
