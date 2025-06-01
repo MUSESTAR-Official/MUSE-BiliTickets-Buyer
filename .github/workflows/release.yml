@@ -36,12 +36,16 @@ jobs:
         run: |
           pip install --upgrade setuptools wheel pyinstaller~=5.13.2 && pip install -r requirements.txt
 
-      - name: Build playwright
-        shell: bash
-        if: matrix.config.os.filename != 'linux_amd64' && matrix.config.os.filename != 'linux_arm64'
+      - name: Install Playwright browsers
         run: |
           PLAYWRIGHT_BROWSERS_PATH=0 playwright install chromium
 
+      - name: Copy Playwright browsers to project
+        shell: bash
+        run: |
+          BROWSERS_PATH=$(python -c "import playwright; import os; print(os.path.dirname(playwright.__file__) + '/driver/package/.local-browsers')")
+          mkdir -p ms-playwright
+          cp -r $BROWSERS_PATH/* ms-playwright/
 
       - name: Build Pyinstaller
         shell: bash

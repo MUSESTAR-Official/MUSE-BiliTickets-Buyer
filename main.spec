@@ -1,5 +1,6 @@
 # -*- mode: python ; coding: utf-8 -*-
 from PyInstaller.utils.hooks import collect_data_files
+import os
 
 datas = []
 datas += collect_data_files('gradio_client')
@@ -10,6 +11,11 @@ datas += collect_data_files('gradio_log')
 datas += collect_data_files('playwright')
 datas.append(('geetest/model/triple.onnx', 'geetest/model'))
 datas.append(('geetest/model/yolo.onnx', 'geetest/model'))
+
+datas.append((
+    os.path.abspath('ms-playwright'),
+    'playwright/ms-playwright'
+))
 
 a = Analysis(
     ['main.py'],
