@@ -36,9 +36,18 @@ jobs:
         run: |
           pip install --upgrade setuptools wheel pyinstaller~=5.13.2 && pip install -r requirements.txt
 
-      - name: Install Playwright browsers
+      - name: Install Playwright browsers (macOS)
+        if: matrix.config.os.filename == 'macos_arm64'
+        shell: bash
         run: |
           PLAYWRIGHT_BROWSERS_PATH=0 playwright install chromium
+
+      - name: Install Playwright browsers (Windows)
+        if: matrix.config.os.filename == 'windows_amd64'
+        shell: pwsh
+        run: |
+          $env:PLAYWRIGHT_BROWSERS_PATH=0
+          playwright install chromium
 
       - name: Copy Playwright browsers to project
         shell: bash
