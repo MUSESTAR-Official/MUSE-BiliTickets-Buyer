@@ -36,7 +36,10 @@ def get_application_tmp_path() -> str:
     return os.path.join(FILES_ROOT_PATH, "tmp")
 
 
-EXE_PATH: str = os.path.dirname(os.path.realpath(sys.executable))  # 应用目录
+if getattr(sys, "frozen", False):
+    EXE_PATH = os.path.dirname(os.path.realpath(sys.executable))
+else:
+    EXE_PATH = os.path.dirname(os.path.abspath(__file__))
 TEMP_PATH: str = get_application_tmp_path()  # 临时目录
 LOG_DIR: str = os.path.join(EXE_PATH, "mstk_logs")
 loguru_config(LOG_DIR, "app.log", enable_console=True, file_colorize=False)
