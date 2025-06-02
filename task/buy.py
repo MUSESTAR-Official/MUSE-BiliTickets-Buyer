@@ -8,6 +8,7 @@ from json import JSONDecodeError
 from urllib.parse import urlencode
 import os
 import re
+import requests
 
 import qrcode
 from loguru import logger
