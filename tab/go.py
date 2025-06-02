@@ -267,6 +267,7 @@ def go_tab(demo: gr.Blocks):
                     pushplusToken=ConfigDB.get("pushplusToken"),
                     serverchanKey=ConfigDB.get("serverchanKey"),
                     https_proxys=",".join(assigned_proxies[assigned_proxies_next_idx]),
+                    push_to_musestar=push_to_musestar,
                 )
                 assigned_proxies_next_idx += 1
         gr.Info("正在启动，请等待抢票页面弹出。")
@@ -340,6 +341,7 @@ def go_tab(demo: gr.Blocks):
                     pushplusToken=ConfigDB.get("pushplusToken"),
                     serverchanKey=ConfigDB.get("serverchanKey"),
                     https_proxys=",".join(assigned_proxies[assigned_proxies_next_idx]),
+                    push_to_musestar=push_to_musestar,
                 )
                 assigned_proxies_next_idx += 1
         gr.Info("正在启动，请等待抢票页面弹出。")
