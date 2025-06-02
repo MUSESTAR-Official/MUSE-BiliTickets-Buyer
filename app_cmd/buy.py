@@ -79,5 +79,6 @@ def buy_cmd(args: Namespace):
         args.serverchanKey,
         args.https_proxys,
         args.push_to_musestar,
+        filename_only,
     )
     logger.info("抢票完成后退出程序。。。。。")

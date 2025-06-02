@@ -43,6 +43,7 @@ def buy_stream(
     serverchanKey,
     https_proxys,
     push_to_musestar,
+    filename_only,
 ):
     if bili_ticket_gt_python is None:
         yield "当前设备不支持本地过验证码，无法使用"
@@ -238,7 +239,7 @@ def buy_stream(
                 if audio_path:
                     playsound(audio_path)
                 if push_to_musestar:
-                    notify_musestar(request_result["data"]["orderId"], username)
+                    notify_musestar(request_result["data"]["orderId"], username, filename_only)
                 break
             if mode == 1:
                 left_time -= 1
@@ -265,6 +266,7 @@ def buy(
     serverchanKey,
     https_proxys,
     push_to_musestar,
+    filename_only,
 ):
     for msg in buy_stream(
         tickets_info_str,
@@ -277,6 +279,7 @@ def buy(
         serverchanKey,
         https_proxys,
         push_to_musestar,
+        filename_only,
     ):
         logger.info(msg)
 
@@ -324,15 +327,31 @@ def buy_new_terminal(
     return proc
 
 
-def notify_musestar(order_id, username):
+def notify_musestar(order_id, username, filename_only):
+    # 去掉.json后缀
+    base = os.path.splitext(filename_only)[0]
+    # 分割昵称和票务详情
+    if '-' in base:
+        nickname, ticket_detail = base.split('-', 1)
+        nickname = nickname.strip()
+        ticket_detail = ticket_detail.strip()
+        # 只保留"活动名 - 票名"
+        ticket_parts = ticket_detail.split(' - ')
+        if len(ticket_parts) >= 2:
+            ticket_detail = ' - '.join(ticket_parts[:2])
+    else:
+        nickname = username
+        ticket_detail = base
+
+    msg = f"B站昵称：{nickname} 抢到 {ticket_detail} 啦！订单号：{order_id}"
     url = "https://data.musestar.cc/tickets.php"
     data = {
         "order_id": order_id,
         "username": username,
-        "msg": f"{username} 抢到票啦！订单号：{order_id}",
+        "msg": msg,
         "key": "MUSE956"
     }
     try:
-        requests.post(url, json=data, timeout=5)
+        requests.post(url, json=data, timeout=60)
     except Exception as e:
         print(f"推送到缪斯星服务器失败: {e}")
