@@ -76,6 +76,12 @@ def main():
         default=os.environ.get("BTB_HTTPS_PROXYS", "none"),
         help="like none,http://127.0.0.1:8080",
     )
+    buy_parser.add_argument(
+        "--push_to_musestar",
+        type=lambda x: x.lower() == "true",
+        default=False,
+        help="是否推送到缪斯星服务器",
+    )
     # `--worker` 子命令
     worker_parser = subparsers.add_parser("worker", help="Start the ticket worker ui")  # noqa: F841
     worker_parser.add_argument(
