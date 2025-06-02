@@ -213,7 +213,7 @@ def go_tab(demo: gr.Blocks):
         return assigned_proxies
 
     def start_go(
-        files, time_start, interval, mode, total_attempts, audio_path, https_proxys
+        files, time_start, interval, mode, total_attempts, audio_path, https_proxys, push_to_musestar
     ):
         if not files:
             return [gr.update(value=withTimeString("未提交抢票配置"), visible=True)]
