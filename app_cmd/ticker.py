@@ -20,9 +20,8 @@ def ticker_cmd(args: Namespace):
 
     with gr.Blocks(
         title="MUSE-BiliTickets-Buyer",
-        head="""<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>""",
+        head="""<script src=\"https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4\"></script>""",
         theme=Soft(),
-        favicon="assets/favicon.ico",
     ) as demo:
         gr.Markdown(header)
         with gr.Tab("生成配置"):

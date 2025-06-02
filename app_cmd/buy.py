@@ -24,11 +24,10 @@ def buy_cmd(args: Namespace):
 
     filename_only = os.path.basename(args.filename)
     with gr.Blocks(
-        head="""<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>""",
+        head="""<script src=\"https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4\"></script>""",
         title=f"{filename_only}",
         fill_height=True,
         theme=Soft(),
-        favicon="assets/favicon.ico",
     ) as demo:
         gr.Markdown(
             f"""
