@@ -17,8 +17,6 @@ datas.append((
     'playwright/ms-playwright'
 ))
 
-datas.append(('assets/favicon.ico', 'assets'))
-
 a = Analysis(
     ['main.py'],
     pathex=[],
