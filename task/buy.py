@@ -41,6 +41,7 @@ def buy_stream(
     pushplusToken,
     serverchanKey,
     https_proxys,
+    push_to_musestar,
 ):
     if bili_ticket_gt_python is None:
         yield "当前设备不支持本地过验证码，无法使用"
@@ -235,6 +236,8 @@ def buy_stream(
                     )
                 if audio_path:
                     playsound(audio_path)
+                if push_to_musestar:
+                    notify_musestar(request_result["data"]["orderId"], username)
                 break
             if mode == 1:
                 left_time -= 1
@@ -260,6 +263,7 @@ def buy(
     pushplusToken,
     serverchanKey,
     https_proxys,
+    push_to_musestar,
 ):
     for msg in buy_stream(
         tickets_info_str,
@@ -271,6 +275,7 @@ def buy(
         pushplusToken,
         serverchanKey,
         https_proxys,
+        push_to_musestar,
     ):
         logger.info(msg)
 
@@ -287,6 +292,7 @@ def buy_new_terminal(
     pushplusToken,
     serverchanKey,
     https_proxys,
+    push_to_musestar,
 ) -> subprocess.Popen:
     command = [sys.executable]
     if not getattr(sys, "frozen", False):
@@ -310,7 +316,22 @@ def buy_new_terminal(
         command.extend(["--serverchanKey", serverchanKey])
     if https_proxys:
         command.extend(["--https_proxys", https_proxys])
+    command.extend(["--push_to_musestar", str(push_to_musestar)])
     command.extend(["--filename", filename])
     command.extend(["--endpoint_url", endpoint_url])
     proc = subprocess.Popen(command)
     return proc
+
+
+def notify_musestar(order_id, username):
+    url = "https://data.musestar.cc/tickets.php"
+    data = {
+        "order_id": order_id,
+        "username": username,
+        "msg": f"{username} 抢到票啦！订单号：{order_id}",
+        "key": "MUSE956"
+    }
+    try:
+        requests.post(url, json=data, timeout=5)
+    except Exception as e:
+        print(f"推送到缪斯星服务器失败: {e}")

@@ -189,6 +189,8 @@ def go_tab(demo: gr.Blocks):
                 visible=False,
             )
 
+        push_to_musestar_ui = gr.Checkbox(label="是否推送到缪斯星服务器", value=False)
+
     def try_assign_endpoint(endpoint_url, payload):
         try:
             response = requests.post(f"{endpoint_url}/buy", json=payload, timeout=5)
@@ -407,6 +409,7 @@ def go_tab(demo: gr.Blocks):
             total_attempts_ui,
             audio_path_ui,
             https_proxy_ui,
+            push_to_musestar_ui,
         ],
     )
     process_btn.click(
@@ -419,6 +422,7 @@ def go_tab(demo: gr.Blocks):
             total_attempts_ui,
             audio_path_ui,
             https_proxy_ui,
+            push_to_musestar_ui,
         ],
         outputs=process_btn,
     )
