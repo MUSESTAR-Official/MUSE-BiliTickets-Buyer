@@ -1,6 +1,6 @@
 [project]
-name = "bilitickerbuy"
-version = "0.1.0"
+name = "MUSE-BiliTickets-Buyer"
+version = "1.0.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
